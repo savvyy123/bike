@@ -56,6 +56,7 @@ function draw() {
   noStroke();
   fill(0);
   textAlign(CENTER, TOP);
+  textFont('"Hiragino Mincho ProN", "YuMincho", "Yu Mincho", "Noto Serif JP", serif');
   const numberTextSize = min(width, height) * 0.045;
   textSize(numberTextSize);
   text(
