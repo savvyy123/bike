@@ -57,7 +57,7 @@ function draw() {
   fill(0);
   textAlign(CENTER, TOP);
   textFont('"Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif');
-  const numberTextSize = min(width, height) * 0.045;
+  const numberTextSize = min(width, height) * 0.06;
   textSize(numberTextSize);
   text(
     `${nf(currentIndex + 1, 2)} / ${processImages.length}`,
