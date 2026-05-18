@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Noto Serif JP";
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url("assets/NotoSerifJP-Medium.woff2") format("woff2");
+}
+
 html,
 body {
   margin: 0;
