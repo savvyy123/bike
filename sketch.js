@@ -84,7 +84,7 @@ function draw() {
   const captionHeight = captionWidth * (captionSource.h / captionSource.w);
   image(
     captionImage,
-    margin * 8,
+    margin * 4,
     height - captionHeight - margin * 4,
     captionWidth,
     captionHeight,
