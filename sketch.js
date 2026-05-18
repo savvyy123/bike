@@ -35,7 +35,7 @@ function draw() {
   const squareY = height / 2;
   const currentIndex = floor((millis() / 2000) % processImages.length);
   const currentImage = processImages[currentIndex];
-  const processScale = min(squareSize / currentImage.width, squareSize / currentImage.height);
+  const processScale = max(squareSize / currentImage.width, squareSize / currentImage.height);
   const processWidth = currentImage.width * processScale;
   const processHeight = currentImage.height * processScale;
 
@@ -44,8 +44,13 @@ function draw() {
   fill(255);
   rect(squareX, squareY, squareSize, squareSize);
 
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.rect(squareX - squareSize / 2, squareY - squareSize / 2, squareSize, squareSize);
+  drawingContext.clip();
   imageMode(CENTER);
   image(currentImage, squareX, squareY, processWidth, processHeight);
+  drawingContext.restore();
 
   rectMode(CENTER);
   noFill();
