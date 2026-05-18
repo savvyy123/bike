@@ -1,27 +1,9 @@
 let infoImage;
 let bicycleGif;
-const processImagePaths = [
-  "proccess/01.jpg",
-  "proccess/02.jpg",
-  "proccess/03.png",
-  "proccess/04.jpg",
-  "proccess/05.jpg",
-  "proccess/06.jpg",
-  "proccess/07.jpg",
-  "proccess/08.jpg",
-  "proccess/09.jpg",
-  "proccess/10.jpg",
-  "proccess/11.jpg",
-  "proccess/12.jpg",
-  "proccess/13.jpg",
-  "proccess/14.jpg",
-  "proccess/15.jpg",
-  "proccess/16.png",
-  "proccess/17.png",
-  "proccess/18.png",
-  "proccess/19.jpg",
-  "proccess/20.jpg",
-];
+const processImagePaths = Array.from(
+  { length: 20 },
+  (_, i) => `proccess/${String(i + 1).padStart(2, "0")}.jpg`
+);
 const processImages = [];
 
 function preload() {
@@ -90,12 +72,25 @@ function draw() {
   image(bicycleGif, width - gifWidth - margin, margin, gifWidth, gifHeight);
 }
 
+function toggleFullscreen() {
+  fullscreen(!fullscreen());
+  setTimeout(() => resizeCanvas(windowWidth, windowHeight), 100);
+}
+
 function keyPressed() {
   if (key === "f" || key === "F") {
-    fullscreen(!fullscreen());
-    setTimeout(() => resizeCanvas(windowWidth, windowHeight), 100);
+    toggleFullscreen();
     return false;
   }
+}
+
+function mousePressed() {
+  toggleFullscreen();
+}
+
+function touchStarted() {
+  toggleFullscreen();
+  return false;
 }
 
 function windowResized() {
