@@ -1,5 +1,7 @@
 let infoImage;
 let bicycleGif;
+let captionImage;
+const captionSource = { x: 250, y: 460, w: 1450, h: 700 };
 const processImagePaths = Array.from(
   { length: 20 },
   (_, i) => `proccess/${String(i + 1).padStart(2, "0")}.jpg`
@@ -9,6 +11,7 @@ const processImages = [];
 function preload() {
   infoImage = loadImage("assets/info1.png");
   bicycleGif = loadImage("assets/bicycle.gif");
+  captionImage = loadImage("assets/caption.png");
 
   for (const path of processImagePaths) {
     processImages.push(loadImage(path));
@@ -76,6 +79,20 @@ function draw() {
 
   imageMode(CORNER);
   image(bicycleGif, width - gifWidth - margin, margin, gifWidth, gifHeight);
+
+  const captionWidth = min(width, height) * 0.4;
+  const captionHeight = captionWidth * (captionSource.h / captionSource.w);
+  image(
+    captionImage,
+    margin * 8,
+    height - captionHeight - margin * 4,
+    captionWidth,
+    captionHeight,
+    captionSource.x,
+    captionSource.y,
+    captionSource.w,
+    captionSource.h
+  );
 }
 
 function toggleFullscreen() {
