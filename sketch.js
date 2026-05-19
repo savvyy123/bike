@@ -12,12 +12,12 @@ const processImagePaths = Array.from(
 const processImages = [];
 
 const faceGrids = [
-  { x: 66, y: 369, size: 120, name: "sota" },
-  { x: 263, y: 449, size: 120, name: "goshin" },
-  { x: 115, y: 530, size: 120, name: "okabe" },
-  { x: 1315, y: 333, size: 120, name: "jinto" },
-  { x: 1233, y: 126, size: 120, name: "katoshun" },
-  { x: 1085, y: 261, size: 120, name: "ken" },
+  { x: 66, y: 369, size: 145, name: "sota" },
+  { x: 274, y: 452, size: 145, name: "goshin" },
+  { x: 115, y: 530, size: 145, name: "okabe" },
+  { x: 1260, y: 307, size: 145, name: "jinto" },
+  { x: 1204, y: 126, size: 145, name: "katoshun" },
+  { x: 1020, y: 261, size: 145, name: "ken" },
 ];
 const memberImages = {};
 
