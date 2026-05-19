@@ -55,12 +55,6 @@ function draw() {
   image(currentImage, squareX, squareY, processWidth, processHeight);
   drawingContext.restore();
 
-  rectMode(CENTER);
-  noFill();
-  stroke(0);
-  strokeWeight(3);
-  rect(squareX, squareY, squareSize, squareSize);
-
   noStroke();
   fill(0);
   textAlign(CENTER, TOP);
