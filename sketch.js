@@ -2,11 +2,22 @@ let infoImage;
 let bicycleGif;
 let captionImage;
 const captionSource = { x: 250, y: 460, w: 1450, h: 700 };
+const caption = { x: 197, y: 701, width: 384 };
 const processImagePaths = Array.from(
   { length: 20 },
   (_, i) => `proccess/${String(i + 1).padStart(2, "0")}.jpg`
 );
 const processImages = [];
+
+const faceGrids = [
+  { x: 66, y: 369, size: 120, name: "sota" },
+  { x: 263, y: 449, size: 120, name: "goshin" },
+  { x: 115, y: 530, size: 120, name: "okabe" },
+  { x: 1315, y: 333, size: 120, name: "jinto" },
+  { x: 1233, y: 126, size: 120, name: "katoshun" },
+  { x: 1085, y: 261, size: 120, name: "ken" },
+];
+const memberImages = {};
 
 function preload() {
   infoImage = loadImage("assets/info1.png");
@@ -16,11 +27,18 @@ function preload() {
   for (const path of processImagePaths) {
     processImages.push(loadImage(path));
   }
+
+  for (const g of faceGrids) {
+    memberImages[g.name] = loadImage(`assets/members/${g.name}.jpg`);
+  }
 }
 
 function setup() {
   const canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent("sketch-container");
+  canvas.mousePressed(toggleFullscreen);
+  canvas.touchStarted(toggleFullscreen);
+
 }
 
 function draw() {
@@ -74,19 +92,32 @@ function draw() {
   imageMode(CORNER);
   image(bicycleGif, width - gifWidth - margin, margin, gifWidth, gifHeight);
 
-  const captionWidth = min(width, height) * 0.4;
-  const captionHeight = captionWidth * (captionSource.h / captionSource.w);
+  const captionHeight = caption.width * (captionSource.h / captionSource.w);
   image(
     captionImage,
-    margin * 4,
-    height - captionHeight - margin * 4,
-    captionWidth,
+    caption.x,
+    caption.y,
+    caption.width,
     captionHeight,
     captionSource.x,
     captionSource.y,
     captionSource.w,
     captionSource.h
   );
+
+  imageMode(CORNER);
+  for (const g of faceGrids) {
+    const img = memberImages[g.name];
+    const cover = max(g.size / img.width, g.size / img.height);
+    const drawW = img.width * cover;
+    const drawH = img.height * cover;
+    drawingContext.save();
+    drawingContext.beginPath();
+    drawingContext.rect(g.x, g.y, g.size, g.size);
+    drawingContext.clip();
+    image(img, g.x + (g.size - drawW) / 2, g.y + (g.size - drawH) / 2, drawW, drawH);
+    drawingContext.restore();
+  }
 }
 
 function toggleFullscreen() {
@@ -99,15 +130,6 @@ function keyPressed() {
     toggleFullscreen();
     return false;
   }
-}
-
-function mousePressed() {
-  toggleFullscreen();
-}
-
-function touchStarted() {
-  toggleFullscreen();
-  return false;
 }
 
 function windowResized() {
