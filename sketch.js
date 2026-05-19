@@ -1,6 +1,8 @@
 let infoImage;
 let bicycleGif;
 let captionImage;
+const REF_WIDTH = 1440;
+const REF_HEIGHT = 900;
 const captionSource = { x: 250, y: 460, w: 1450, h: 700 };
 const caption = { x: 197, y: 701, width: 384 };
 const processImagePaths = Array.from(
@@ -44,16 +46,24 @@ function setup() {
 function draw() {
   background(255);
 
-  const scale = min(width / infoImage.width, height / infoImage.height);
-  const imageWidth = infoImage.width * scale;
-  const imageHeight = infoImage.height * scale;
+  const layoutScale = min(width / REF_WIDTH, height / REF_HEIGHT);
+  const offsetX = (width - REF_WIDTH * layoutScale) / 2;
+  const offsetY = (height - REF_HEIGHT * layoutScale) / 2;
+
+  push();
+  translate(offsetX, offsetY);
+  scale(layoutScale);
+
+  const infoFit = min(REF_WIDTH / infoImage.width, REF_HEIGHT / infoImage.height);
+  const imageWidth = infoImage.width * infoFit;
+  const imageHeight = infoImage.height * infoFit;
 
   imageMode(CENTER);
-  image(infoImage, width / 2, height / 2, imageWidth, imageHeight);
+  image(infoImage, REF_WIDTH / 2, REF_HEIGHT / 2, imageWidth, imageHeight);
 
-  const squareSize = min(width, height) * 0.55;
-  const squareX = width / 2;
-  const squareY = height / 2;
+  const squareSize = min(REF_WIDTH, REF_HEIGHT) * 0.55;
+  const squareX = REF_WIDTH / 2;
+  const squareY = REF_HEIGHT / 2;
   const currentIndex = floor((millis() / 2000) % processImages.length);
   const currentImage = processImages[currentIndex];
   const processScale = max(squareSize / currentImage.width, squareSize / currentImage.height);
@@ -77,7 +87,7 @@ function draw() {
   fill(0);
   textAlign(CENTER, TOP);
   textFont('"Noto Serif JP", "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif');
-  const numberTextSize = min(width, height) * 0.06;
+  const numberTextSize = min(REF_WIDTH, REF_HEIGHT) * 0.06;
   textSize(numberTextSize);
   text(
     `${nf(currentIndex + 1, 2)} / ${processImages.length}`,
@@ -85,12 +95,12 @@ function draw() {
     squareY + squareSize / 2 + numberTextSize * 0.4
   );
 
-  const gifWidth = min(width, height) * 0.14;
+  const gifWidth = min(REF_WIDTH, REF_HEIGHT) * 0.14;
   const gifHeight = gifWidth * (bicycleGif.height / bicycleGif.width);
-  const margin = min(width, height) * 0.025;
+  const margin = min(REF_WIDTH, REF_HEIGHT) * 0.025;
 
   imageMode(CORNER);
-  image(bicycleGif, width - gifWidth - margin, margin, gifWidth, gifHeight);
+  image(bicycleGif, REF_WIDTH - gifWidth - margin, margin, gifWidth, gifHeight);
 
   const captionHeight = caption.width * (captionSource.h / captionSource.w);
   image(
@@ -118,6 +128,8 @@ function draw() {
     image(img, g.x + (g.size - drawW) / 2, g.y + (g.size - drawH) / 2, drawW, drawH);
     drawingContext.restore();
   }
+
+  pop();
 }
 
 function toggleFullscreen() {
